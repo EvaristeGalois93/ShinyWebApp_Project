@@ -1,0 +1,49 @@
+---
+title: "Central Limit Theorem: An experimental result"
+author: "Luca"
+date: "12/9/2021"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+## Overview
+The aim of the project is to verify the validity of the Central Limit Theorem (CLT).
+To do so, we make use of the exponential distribution. The idea is to simulate a large number of
+40 distributions, to check whether the the averages behave as a standard normal.
+
+The parameter for the exponential, $lambda$, is set to be equal to 0.5.
+We will see that increasing the number of simulation would smooth the curve's shape further, bringing it towards the Gaussian curve. 
+
+## Introduction
+The shiny web app can be found [here](https://evaristegalois.shinyapps.io/ShinyProject_CLT_ExponentialFamily/).
+The parameters are set as follows. For the purpose of this presentation, the number of observations is fixed to 700:
+
+```{r params, echo=TRUE}
+# set seed
+set.seed(2021-08-31)
+# simulate 40 exponential with 1000 obs each, 
+# and stack them in matrix sim_exp
+n_sim = 40
+n_obs = 700
+lambda = .5
+sim_exp = NULL
+for (i in 1:n_obs) sim_exp = c(sim_exp, mean(rexp(n_sim, lambda)))
+```
+
+
+## Plot
+Let's look at the data, using the fixed parameters.
+
+```{r plot, echo=FALSE, eval=TRUE}
+# draw the histogram with the specified number of bins
+hist(sim_exp, breaks = n_sim, col = 'darkgray', border = 'white')
+```
+
+## Conclusion
+This small presentation gives an experimental result of the CLT: when IID variables are summed up, their properly normalized sum tends towards a normal distribution. Increasing the number of simulations means smoothing the curve. Therefore, theoretically, dragging this number to infinite, would bring the distribution to the perfect Gaussian curve.
+
+Moving the slider the result is clear: we start from a minimum of 100 simulations to a maximum of 1000. As long as the number of simulations remains close to its min, the distribution is not well defined. Whereas, moving towards the max, we can see that the shape smooths out, in accordance to the CLT.
+
+Thanks for watching :)
